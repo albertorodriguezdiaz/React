@@ -1,16 +1,25 @@
 import React, { Component } from 'react'; 
+import uuid from 'uuid';
+
+const stateInicial = {
+    cita :{
+        paciente: '',
+        aconpanante: '',
+        fecha: '',
+        hora: '',
+        sintomas: ''
+    },
+    error: false
+
+}
+
 
 class NuevaCita extends Component {
     state = {  
-        cita :{
-            paciente: '',
-            aconpanante: '',
-            fecha: '',
-            hora: '',
-            sintomas: ''
-        }
+        ...stateInicial
     }
 
+    // Cuannod el usuario escribe en los inputs
     handleChange = (e) => {
         // console.log(e.target.name + ':' + e.target.value);
         
@@ -22,7 +31,41 @@ class NuevaCita extends Component {
         })
     }
 
+    // Cuando el usuario envia el formulario
+    handleSubmit = (e) => {
+        e.preventDefault();
+
+        //  Extraer los valores del state
+        const {paciente, aconpanante, fecha, hora, sintomas} = this.state.cita;
+
+        //Validar que todos los datos esten llenos
+        if(paciente === '' || aconpanante === '' || fecha === '' || hora === '' || sintomas === '' ){
+            this.setState({
+                error: true
+            });
+
+            return;
+        }
+
+        // Generar objeto con los datos
+        const nuevaCita = {...this.state.cita}
+        nuevaCita.id = uuid();
+
+        // Agregar cita al state
+        this.props.crearNuevaCita(nuevaCita);
+
+        //Colocar en el state el stateInicial
+        this.setState({
+            ...stateInicial
+        })
+
+    }
+
     render() { 
+
+        // Extraer valor del state
+        const {error} = this.state;
+
         return ( 
             <div className="card mt-5 py-5">
                 <div className="card-body">
@@ -30,7 +73,11 @@ class NuevaCita extends Component {
                         Llenar formulario para crear una nueva cita
                     </h2>
 
-                    <form>
+                    { error ? <div className="alert alert-danger mt-2 mb-5 text-center">Todos los campos son obligatorios</div> : null }
+
+                    <form
+                        onSubmit={this.handleSubmit}
+                    >
                        <div className="form-group row">
                            <label className="col-sm-4 col-lg-2 col-form-label">Nombre Paciente</label>
                            <div className="col-sm-8 col-lg-10">
