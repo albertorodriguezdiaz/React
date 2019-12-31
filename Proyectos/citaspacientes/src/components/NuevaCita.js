@@ -2,8 +2,26 @@ import React, { Component } from 'react';
 
 class NuevaCita extends Component {
     state = {  
-        
+        cita :{
+            paciente: '',
+            aconpanante: '',
+            fecha: '',
+            hora: '',
+            sintomas: ''
+        }
     }
+
+    handleChange = (e) => {
+        // console.log(e.target.name + ':' + e.target.value);
+        
+        this.setState({
+            cita : {
+                ...this.state.cita,
+                [e.target.name] : e.target.value
+            }
+        })
+    }
+
     render() { 
         return ( 
             <div className="card mt-5 py-5">
@@ -21,6 +39,8 @@ class NuevaCita extends Component {
                                     className="form-control"
                                     placeholder="Nombre Paciente"
                                     name="paciente"
+                                    onChange={this.handleChange}
+                                    value={this.state.cita.paciente}
                                />
                            </div>
                        </div> {/* form-group */}
@@ -33,6 +53,8 @@ class NuevaCita extends Component {
                                     className="form-control"
                                     placeholder="Nombre Acompañante"
                                     name="aconpanante"
+                                    onChange={this.handleChange}
+                                    value={this.state.cita.aconpanante}
                                />
                            </div>
                        </div> {/* form-group */}
@@ -44,6 +66,8 @@ class NuevaCita extends Component {
                                     type="date"
                                     className="form-control"
                                     name="fecha"
+                                    onChange={this.handleChange}
+                                    value={this.state.cita.fecha}
                                />
                            </div>
 
@@ -53,6 +77,8 @@ class NuevaCita extends Component {
                                     type="time"
                                     className="form-control"
                                     name="hora"
+                                    onChange={this.handleChange}
+                                    value={this.state.cita.hora}
                                />
                            </div>
                        </div> {/* form-group */}
@@ -65,6 +91,8 @@ class NuevaCita extends Component {
                                     className="form-control"
                                     name="sintomas"
                                     placeholder="Describe los sintomas"
+                                    onChange={this.handleChange}
+                                    value={this.state.cita.sintomas}
                                ></textarea>
                 
                            </div>
