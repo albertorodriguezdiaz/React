@@ -12,6 +12,7 @@ const Cita = ({cita}) => (
             <p className="card-text"><span>Hora: </span> {cita.hora} </p>
             <p className="card-text"><span>Sintomas: </span></p>
             <p className="card-text"> {cita.sintomas} </p>
+            <button type="button" class="btn btn-warning">Eliminar</button>
         </div>
     </div>
 );
